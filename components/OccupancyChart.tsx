@@ -21,8 +21,16 @@ interface OccupancyChartProps {
   gymName: string;
 }
 
-// Alias para evitar conflicto de tipos de Recharts en Vercel
+// Aliases para evitar conflictos de tipos de Recharts en Vercel
 const RC = ResponsiveContainer as any;
+const LC = LineChart as any;
+const BC = BarChart as any;
+const CG = CartesianGrid as any;
+const X = XAxis as any;
+const Y = YAxis as any;
+const TT = Tooltip as any;
+const L = Line as any;
+const B = Bar as any;
 
 export default function OccupancyChart({ data, gymName }: OccupancyChartProps) {
   const chartData = useMemo(() => {
@@ -99,38 +107,25 @@ export default function OccupancyChart({ data, gymName }: OccupancyChartProps) {
           <TabsContent value="today" className="mt-6">
             <div className="h-64 w-full">
               <RC width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis
-                    dataKey="hour"
-                    tick={{ fontSize: 12 }}
-                    axisLine={{ stroke: "#e2e8f0" }}
-                  />
-                  <YAxis
+                <LC data={chartData}>
+                  <CG strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <X dataKey="hour" tick={{ fontSize: 12 }} axisLine={{ stroke: "#e2e8f0" }} />
+                  <Y
                     domain={[0, 100]}
                     tick={{ fontSize: 12 }}
                     axisLine={{ stroke: "#e2e8f0" }}
-                    label={{
-                      value: "Ocupación %",
-                      angle: -90,
-                      position: "insideLeft",
-                    }}
+                    label={{ value: "Ocupación %", angle: -90, position: "insideLeft" }}
                   />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Line
+                  <TT content={<CustomTooltip />} />
+                  <L
                     type="monotone"
                     dataKey="occupancy"
                     stroke="#3b82f6"
                     strokeWidth={3}
                     dot={{ fill: "#3b82f6", strokeWidth: 2, r: 4 }}
-                    activeDot={{
-                      r: 6,
-                      stroke: "#3b82f6",
-                      strokeWidth: 2,
-                      fill: "#ffffff",
-                    }}
+                    activeDot={{ r: 6, stroke: "#3b82f6", strokeWidth: 2, fill: "#ffffff" }}
                   />
-                </LineChart>
+                </LC>
               </RC>
             </div>
 
@@ -154,26 +149,18 @@ export default function OccupancyChart({ data, gymName }: OccupancyChartProps) {
           <TabsContent value="weekly" className="mt-6">
             <div className="h-64 w-full">
               <RC width="100%" height="100%">
-                <BarChart data={weeklyAverage}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis
-                    dataKey="hour"
-                    tick={{ fontSize: 12 }}
-                    axisLine={{ stroke: "#e2e8f0" }}
-                  />
-                  <YAxis
+                <BC data={weeklyAverage}>
+                  <CG strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <X dataKey="hour" tick={{ fontSize: 12 }} axisLine={{ stroke: "#e2e8f0" }} />
+                  <Y
                     domain={[0, 100]}
                     tick={{ fontSize: 12 }}
                     axisLine={{ stroke: "#e2e8f0" }}
-                    label={{
-                      value: "Ocupación %",
-                      angle: -90,
-                      position: "insideLeft",
-                    }}
+                    label={{ value: "Ocupación %", angle: -90, position: "insideLeft" }}
                   />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="occupancy" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                </BarChart>
+                  <TT content={<CustomTooltip />} />
+                  <B dataKey="occupancy" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                </BC>
               </RC>
             </div>
             <p className="text-sm text-gray-500 mt-2 text-center">
