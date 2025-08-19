@@ -30,8 +30,12 @@ const amenityOptions = [
 ];
 
 export default function FilterSidebar({ filters, onFiltersChange, resultCount }: FilterSidebarProps) {
-  const handlePriceChange = (value: number[]) => {
-    onFiltersChange({ ...filters, priceRange: value });
+ const handlePriceChange = (value: number[]) => {
+  const min = Number(value[0] ?? filters.priceRange[0]);
+  const max = Number(value[1] ?? filters.priceRange[1]);
+  onFiltersChange({ ...filters, priceRange: [min, max] as [number, number] });
+};
+
   };
 
   const handleRatingChange = (value: number[]) => {
