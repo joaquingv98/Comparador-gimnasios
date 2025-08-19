@@ -89,10 +89,16 @@ export default function Home() {
         return false;
       }
 
-      // Distance (if location available)
-      if (userLocation && gym.distance > filters.distance) {
-        return false;
-      }
+      // Distance (if available). If distance is undefined we keep the gym.
+if (
+  userLocation &&
+  typeof gym.distance === "number" &&
+  Number.isFinite(gym.distance) &&
+  gym.distance > filters.distance
+) {
+  return false;
+}
+
 
       // Amenities
       if (filters.amenities.length > 0 && 
