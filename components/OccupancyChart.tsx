@@ -13,7 +13,10 @@ interface OccupancyChartProps {
 
 export default function OccupancyChart({ data, gymName }: OccupancyChartProps) {
   const chartData = useMemo(() => {
-    const currentDay = new Date().toLocaleLowerCase().substring(0, 3);
+    // 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'
+const dayKey = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][new Date().getDay()];
+const currentDay = dayKey;
+
     const todaysData = data.filter(d => d.day.toLowerCase() === currentDay);
     
     return todaysData.map(point => ({
